@@ -8,6 +8,18 @@
 #include <stdio.h>
 #include <string.h>
 
+/*
+struct sockaddr_in {
+    sa_family_t sin_family;
+    u_int16_t sin_port;
+    struct in_addr sin_addr;
+}
+struct in_addr {
+    u_int32_t s_addr;
+}
+*/
+
+
 static bool stop = false;
 static void handle_term( int sig )
 {
