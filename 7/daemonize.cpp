@@ -1,3 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include<sys/stat.h> 
+#include<fcntl.h>
 bool daemonize()
 {
     pid_t pid = fork();
@@ -7,9 +14,18 @@ bool daemonize()
     }
     else if ( pid > 0 )
     {
+        while(1) {
+        sleep(2);
+        printf("xixi\n");
+        
+        }
         exit( 0 );
     }
-
+    
+    while(1) {
+        sleep(2);
+        printf("haha\n");
+    }
     umask( 0 );
 
     pid_t sid = setsid();
@@ -32,4 +48,9 @@ bool daemonize()
     open( "/dev/null", O_RDWR );
     open( "/dev/null", O_RDWR );
     return true;
+}
+
+int main () {
+    daemonize();
+    return 0;
 }
