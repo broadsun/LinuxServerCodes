@@ -53,7 +53,7 @@ int main( int argc, char* argv[] )
 
     ret = listen( sock, backlog );
     assert( ret != -1 );
-
+    
     while ( ! stop )
     {
         sleep( 1 );
