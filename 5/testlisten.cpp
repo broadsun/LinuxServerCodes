@@ -17,6 +17,17 @@ struct sockaddr_in {
 struct in_addr {
     u_int32_t s_addr;
 }
+
+struct sockaddr {
+    sa_family_t sa_family;
+    char sa_data[14];
+};//ipv4 only
+
+struct sockaddr_storage {
+    sa_family_t sa_family;
+    unsigned long int __ss_align;
+    char __ss_padding[128-sizeof(__ss_align)];
+}
 */
 
 
