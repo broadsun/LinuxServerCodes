@@ -46,7 +46,9 @@ int main( int argc, char* argv[] )
     {
         char host_addr[INET_ADDRSTRLEN] = {0};
         inet_ntop(AF_INET, &client.sin_addr, host_addr, INET_ADDRSTRLEN);
-        printf("%s\t%u\n", host_addr, client.sin_port);
+        // ERROR!!! printf("%s\t%u\n", host_addr, client.sin_port);
+        printf("%s\t%u\n", host_addr, ntohs(client.sin_port)); //Right
+        //ERROR!!! printf("%s\t%u\n", host_addr, ntohl(client.sin_port));
         char buffer[ BUF_SIZE ];
 
         memset( buffer, '\0', BUF_SIZE );
