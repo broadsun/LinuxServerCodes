@@ -300,12 +300,14 @@ int main( int argc, char* argv[] )
 
     while( !stop_server )
     {
+        printf("%d\n", __LINE__);
         int number = epoll_wait( epollfd, events, MAX_EVENT_NUMBER, -1 );
         if ( ( number < 0 ) && ( errno != EINTR ) )
         {
             printf( "epoll failure\n" );
             break;
         }
+        printf("%d\n", __LINE__);
 
         for ( int i = 0; i < number; i++ )
         {

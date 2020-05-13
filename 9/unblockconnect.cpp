@@ -107,7 +107,7 @@ int main( int argc, char* argv[] )
     {
         return 1;
     }
-    shutdown( sockfd, SHUT_WR );
+    shutdown( sockfd, SHUT_WR );//这里会往服务器发请求
     sleep( 200 );
     printf( "send data out\n" );
     send( sockfd, "abc", 3, 0 );

@@ -14,3 +14,21 @@ extra_cppflags = [
 ],
 
 )
+cc_binary (
+name = 'unblockconnect',
+srcs = [
+    'unblockconnect.cpp',
+],
+)
+cc_binary (
+name = 'mytalk_client',
+srcs = [
+    'mytalk_client.cpp',
+],
+)
+cc_binary (
+name = 'mytalk_server',
+srcs = [
+    'mytalk_server.cpp',
+],
+)

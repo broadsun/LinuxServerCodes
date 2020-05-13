@@ -42,6 +42,10 @@ int main( int argc, char* argv[] )
     }
     else
     {
+        /*关闭stdout，赋值connfd，这是connfd就只指向了stdout，printf的值就会写到connfd套接字
+         *
+         *
+         */
         close( STDOUT_FILENO );
         dup( connfd );
         printf( "abcd\n" );

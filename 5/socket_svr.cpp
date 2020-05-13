@@ -37,36 +37,18 @@ int main( int argc, char* argv[] )
 
     struct sockaddr_in client;
     socklen_t client_addrlength = sizeof( client );
-    int connfd = accept( sock, ( struct sockaddr* )&client, &client_addrlength );
-    if ( connfd < 0 )
-    {
-        printf( "errno is: %d\n", errno );
-    }
-    else
-    {
+    int connfd = -1;
+    
+    while((connfd = accept( sock, ( struct sockaddr* )&client, &client_addrlength ) )>=0) {
         char host_addr[INET_ADDRSTRLEN] = {0};
         inet_ntop(AF_INET, &client.sin_addr, host_addr, INET_ADDRSTRLEN);
         // ERROR!!! printf("%s\t%u\n", host_addr, client.sin_port);
         printf("%s\t%u\n", host_addr, ntohs(client.sin_port)); //Right
         //ERROR!!! printf("%s\t%u\n", host_addr, ntohl(client.sin_port));
         char buffer[ BUF_SIZE ];
-
         memset( buffer, '\0', BUF_SIZE );
         ret = recv( connfd, buffer, BUF_SIZE-1, 0 );
         printf( "got %d bytes of normal data '%s'\n", ret, buffer );
-
-        printf("%d\n", sockatmark(connfd));
-        memset( buffer, '\0', BUF_SIZE );
-        ret = recv( connfd, buffer, BUF_SIZE-1, MSG_OOB );
-        printf( "got %d bytes of oob data '%s'\n", ret, buffer );
-
-        memset( buffer, '\0', BUF_SIZE );
-        ret = recv( connfd, buffer, BUF_SIZE-1, 0 );
-        printf( "got %d bytes of normal data '%s'\n", ret, buffer );
-        memset( buffer, '\0', BUF_SIZE );
-        ret = recv( connfd, buffer, BUF_SIZE-1, 0 );
-        printf( "got %d bytes of normal data '%s'\n", ret, buffer );
-
         close( connfd );
     }
 

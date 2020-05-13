@@ -1,0 +1,44 @@
+[2K[1;36m15/half_sycn_half_async/cgi_conn.cpp: In member function 'void cgi_conn::process()':
+[0m[1;33m15/half_sycn_half_async/cgi_conn.cpp:81:42: warning: missing sentinel in function call [-Wformat=]
+[0m[1;36m                     execl(m_buf, m_buf, 0);
+[0m[1;32m                                          ^
+[0m[1;36m15/half_sycn_half_async/cgi_conn.cpp: In function 'int main(int, char**)':
+[0m[1;33m15/half_sycn_half_async/cgi_conn.cpp:108:9: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
+[0m[1;36m     int ret = 0;
+[0m[1;32m         ^
+[0m[1;36mIn file included from 15/half_sycn_half_async/cgi_conn.cpp:19:0:
+[0m[1;36m15/half_sycn_half_async/processpool.h: In instantiation of 'processpool<T>::processpool(int, int) [with T = cgi_conn]':
+[0m[1;36m15/half_sycn_half_async/processpool.h:40:24:   required from 'static processpool<T>* processpool<T>::create(int, int) [with T = cgi_conn]'
+[0m[1;36m15/half_sycn_half_async/cgi_conn.cpp:118:59:   required from here
+[0m[1;33m15/half_sycn_half_async/processpool.h:62:9: warning: 'processpool<cgi_conn>::m_listenfd' will be initialized after [-Wreorder]
+[0m[1;36m     int m_listenfd;
+[0m[1;32m         ^
+[0m[1;33m15/half_sycn_half_async/processpool.h:59:9: warning:   'int processpool<cgi_conn>::m_process_number' [-Wreorder]
+[0m[1;36m     int m_process_number;
+[0m[1;32m         ^
+[0m[1;33m15/half_sycn_half_async/processpool.h:118:1: warning:   when initialized here [-Wreorder]
+[0m[1;36m processpool< T >::processpool( int listenfd, int process_number ) 
+[0m[1;32m ^
+[0m[1;33m15/half_sycn_half_async/processpool.h:128:13: warning: unused variable 'ret' [-Wunused-variable]
+[0m[1;36m         int ret = socketpair( PF_UNIX, SOCK_STREAM, 0, m_sub_process[i].m_pipefd );
+[0m[1;32m             ^
+[0m[1;36m15/half_sycn_half_async/processpool.h: In instantiation of 'void processpool<T>::run_child() [with T = cgi_conn]':
+[0m[1;36m15/half_sycn_half_async/processpool.h:173:19:   required from 'void processpool<T>::run() [with T = cgi_conn]'
+[0m[1;36m15/half_sycn_half_async/cgi_conn.cpp:121:19:   required from here
+[0m[1;33m15/half_sycn_half_async/processpool.h:234:21: warning: unused variable 'sig' [-Wunused-variable]
+[0m[1;36m                 int sig;
+[0m[1;32m                     ^
+[0m[1;36m15/half_sycn_half_async/processpool.h: In instantiation of 'void processpool<T>::run_parent() [with T = cgi_conn]':
+[0m[1;36m15/half_sycn_half_async/processpool.h:176:16:   required from 'void processpool<T>::run() [with T = cgi_conn]'
+[0m[1;36m15/half_sycn_half_async/cgi_conn.cpp:121:19:   required from here
+[0m[1;33m15/half_sycn_half_async/processpool.h:346:21: warning: unused variable 'sig' [-Wunused-variable]
+[0m[1;36m                 int sig;
+[0m[1;32m                     ^
+[0m[1;36m15/half_sycn_half_async/processpool.h: In instantiation of 'void processpool<T>::setup_sig_pipe() [with T = cgi_conn]':
+[0m[1;36m15/half_sycn_half_async/processpool.h:183:20:   required from 'void processpool<T>::run_child() [with T = cgi_conn]'
+[0m[1;36m15/half_sycn_half_async/processpool.h:173:19:   required from 'void processpool<T>::run() [with T = cgi_conn]'
+[0m[1;36m15/half_sycn_half_async/cgi_conn.cpp:121:19:   required from here
+[0m[1;33m15/half_sycn_half_async/processpool.h:156:9: warning: unused variable 'ret' [-Wunused-variable]
+[0m[1;36m     int ret = socketpair( PF_UNIX, SOCK_STREAM, 0, sig_pipefd );
+[0m[1;32m         ^
+[0m

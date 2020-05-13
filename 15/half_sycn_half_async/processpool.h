@@ -31,9 +31,9 @@ template< typename T >
 class processpool
 {
 private:
-    processpool( int listenfd, int process_number = 8 );
+    processpool( int listenfd, int process_number = 1 );
 public:
-    static processpool< T >* create( int listenfd, int process_number = 8 )
+    static processpool< T >* create( int listenfd, int process_number = 1 )
     {
         if( !m_instance )
         {
@@ -96,6 +96,7 @@ static void sig_handler( int sig )
 {
     int save_errno = errno;
     int msg = sig;
+    printf("aaa\n");
     send( sig_pipefd[1], ( char* )&msg, 1, 0 );
     errno = save_errno;
 }
@@ -128,14 +129,17 @@ processpool< T >::processpool( int listenfd, int process_number )
         assert( ret == 0 );
 
         m_sub_process[i].m_pid = fork();
+        printf("test22,%d,%d\n", getppid(), getpid());
         assert( m_sub_process[i].m_pid >= 0 );
         if( m_sub_process[i].m_pid > 0 )
         {
+        printf("test1,%d,%d\n", getppid(), getpid());
             close( m_sub_process[i].m_pipefd[1] );
             continue;
         }
         else
         {
+        printf("test2,%d,%d\n", getppid(), getpid());
             close( m_sub_process[i].m_pipefd[0] );
             m_idx = i;
             break;
@@ -175,6 +179,7 @@ void processpool< T >::run()
 template< typename T >
 void processpool< T >::run_child()
 {
+    printf("%d\n", __LINE__);
     setup_sig_pipe();
 
     int pipefd = m_sub_process[m_idx].m_pipefd[ 1 ];
@@ -188,6 +193,7 @@ void processpool< T >::run_child()
 
     while( ! m_stop )
     {
+    printf("%d\n", __LINE__);
         number = epoll_wait( m_epollfd, events, MAX_EVENT_NUMBER, -1 );
         if ( ( number < 0 ) && ( errno != EINTR ) )
         {
@@ -200,6 +206,7 @@ void processpool< T >::run_child()
             int sockfd = events[i].data.fd;
             if( ( sockfd == pipefd ) && ( events[i].events & EPOLLIN ) )
             {
+    printf("%d\n", __LINE__);
                 int client = 0;
                 ret = recv( sockfd, ( char* )&client, sizeof( client ), 0 );
                 if( ( ( ret < 0 ) && ( errno != EAGAIN ) ) || ret == 0 ) 
@@ -208,6 +215,7 @@ void processpool< T >::run_child()
                 }
                 else
                 {
+    printf("%d\n", __LINE__);
                     struct sockaddr_in client_address;
                     socklen_t client_addrlength = sizeof( client_address );
                     int connfd = accept( m_listenfd, ( struct sockaddr* )&client_address, &client_addrlength );
@@ -222,6 +230,7 @@ void processpool< T >::run_child()
             }
             else if( ( sockfd == sig_pipefd[0] ) && ( events[i].events & EPOLLIN ) )
             {
+    printf("%d\n", __LINE__);
                 int sig;
                 char signals[1024];
                 ret = recv( sig_pipefd[0], signals, sizeof( signals ), 0 );
@@ -261,6 +270,7 @@ void processpool< T >::run_child()
             }
             else if( events[i].events & EPOLLIN )
             {
+    printf("%d\n", __LINE__);
                  users[sockfd].process();
             }
             else
@@ -280,6 +290,7 @@ void processpool< T >::run_child()
 template< typename T >
 void processpool< T >::run_parent()
 {
+    printf("%d\n", __LINE__);
     setup_sig_pipe();
 
     addfd( m_epollfd, m_listenfd );
@@ -292,18 +303,21 @@ void processpool< T >::run_parent()
 
     while( ! m_stop )
     {
+    printf("%d\n", __LINE__);
         number = epoll_wait( m_epollfd, events, MAX_EVENT_NUMBER, -1 );
         if ( ( number < 0 ) && ( errno != EINTR ) )
         {
             printf( "epoll failure\n" );
             break;
         }
+    printf("%d\n", __LINE__);
 
         for ( int i = 0; i < number; i++ )
         {
             int sockfd = events[i].data.fd;
             if( sockfd == m_listenfd )
             {
+    printf("%d\n", __LINE__);
                 int i =  sub_process_counter;
                 do
                 {
@@ -328,6 +342,7 @@ void processpool< T >::run_parent()
             }
             else if( ( sockfd == sig_pipefd[0] ) && ( events[i].events & EPOLLIN ) )
             {
+    printf("%d\n", __LINE__);
                 int sig;
                 char signals[1024];
                 ret = recv( sig_pipefd[0], signals, sizeof( signals ), 0 );
@@ -391,6 +406,7 @@ void processpool< T >::run_parent()
             }
             else
             {
+    printf("%d\n", __LINE__);
                 continue;
             }
         }

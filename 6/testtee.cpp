@@ -26,6 +26,7 @@ int main( int argc, char* argv[] )
 	//close( STDIN_FILENO );
 	// dup2( pipefd_stdout[1], STDIN_FILENO );
 	//write( pipefd_stdout[1], "abc\n", 4 );
+    //为啥这么写，因为tee的fin和fout都是管道
 	ret = splice( STDIN_FILENO, NULL, pipefd_stdout[1], NULL, 32768, SPLICE_F_MORE | SPLICE_F_MOVE );
 	assert( ret != -1 );
 	ret = tee( pipefd_stdout[0], pipefd_file[1], 32768, SPLICE_F_NONBLOCK ); 

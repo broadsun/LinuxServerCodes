@@ -68,7 +68,7 @@ int main( int argc, char* argv[] )
         {
             memset( read_buf, '\0', BUFFER_SIZE );
             recv( fds[1].fd, read_buf, BUFFER_SIZE-1, 0 );
-            printf( "%s\n", read_buf );
+            printf( "recv:%s\n", read_buf );
         }
 
         if( fds[0].revents & POLLIN )

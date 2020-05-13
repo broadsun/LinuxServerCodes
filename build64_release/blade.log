@@ -1,0 +1,15 @@
+Blade(debug): Failed to generate scm: /bin/sh: svn: command not found
+
+Blade(info): loading BUILDs...
+Blade(info): loading done.
+Blade(info): analyzing dependency graph...
+Blade(info): analyzing done.
+Blade(info): generating build rules...
+Blade(debug): CPP=cpp
+Blade(debug): CC=gcc
+Blade(debug): CXX=g++
+Blade(debug): LD=g++
+Blade(info): generating done.
+Blade(info): building...
+Blade(info): tunes the parallel jobs number(-j N) to be 2
+Blade(info): building done.
